@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/locale/zh_CN';
 import "./globals.css";
-import Navbar from './components/Navbar';
+import Navbar from './components/Navbar/page';
 
 
 export const metadata: Metadata = {
