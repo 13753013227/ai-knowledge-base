@@ -1,5 +1,10 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { message } from 'antd';
+let message: any;
+if (typeof window !== 'undefined') {
+  import('antd').then((antd) => {
+    message = antd.message;
+  });
+}
 import { useRouter } from 'next/navigation';
 
 // 创建axios实例
@@ -13,7 +18,7 @@ const request: AxiosInstance = axios.create({
 
 // 请求拦截器
 request.interceptors.request.use(
-  (config: AxiosRequestConfig) => {
+  (config: any) => {
     // 从localStorage获取token
     const token = localStorage.getItem('token');
     if (token) {
@@ -32,38 +37,59 @@ request.interceptors.request.use(
 // 响应拦截器
 request.interceptors.response.use(
   (response: AxiosResponse) => {
-    const { data } = response;
+    const { data } = response; 
     // 这里可以根据后端的响应结构进行调整
-    if (data.code === 200) {
+    // if (data.code === 200) {
       return data.data;
-    } else {
-      message.error(data.message || '请求失败');
-      return Promise.reject(new Error(data.message || '请求失败'));
-    }
+    // } else {
+    //   message.error(data.message || '请求失败');
+    //   return Promise.reject(new Error(data.message || '请求失败'));
+    // }
   },
   (error) => {
+    console.log("---errorerrorerror--------", error.response);
+    if (message) {
+      message.error(error.response.data.message);
+    }
     if (error.response) {
       switch (error.response.status) {
+        case 400:
+          if (message) {
+      message.error(error.response.data.message);
+    }
+          break;
         case 401:
           // 未授权，跳转到登录页
-          message.error('登录已过期，请重新登录');
+          if (message) {
+            message.error('登录已过期，请重新登录');
+          }
           localStorage.removeItem('token');
           window.location.href = '/login';
           break;
         case 403:
-          message.error('没有权限访问');
+          if (message) {
+            message.error('没有权限访问');
+          }
           break;
         case 404:
-          message.error('请求的资源不存在');
+          if (message) {
+            message.error('请求的资源不存在');
+          }
           break;
         case 500:
-          message.error('服务器错误');
+          if (message) {
+            message.error('服务器错误');
+          }
           break;
         default:
-          message.error('网络错误');
+          if (message) {
+            message.error('网络错误');
+          }
       }
     } else {
-      message.error('网络连接失败');
+      if (message) {
+        message.error('网络连接失败');
+      }
     }
     return Promise.reject(error);
   }

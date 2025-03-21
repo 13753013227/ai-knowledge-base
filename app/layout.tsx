@@ -6,7 +6,6 @@ import "./globals.css";
 import Navbar from './components/Navbar/page';
 import { usePathname } from 'next/navigation';
 
-
 export default function RootLayout({
   children,
 }: Readonly<{

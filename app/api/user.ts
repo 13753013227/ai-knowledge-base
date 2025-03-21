@@ -1,9 +1,10 @@
 import request from '../utils/request';
 
 export interface LoginParams {
-  username: string;
+  email: string;
   password: string;
-  remember?: boolean;
+  language: string;
+  remember_me: boolean;
 }
 
 export interface UserInfo {
@@ -16,7 +17,7 @@ export interface UserInfo {
 
 // 用户登录
 export const login = (params: LoginParams) => {
-  return request.post<UserInfo>('/user/login', params);
+  return request.post<UserInfo>('/login', params);
 };
 
 // 获取用户信息
