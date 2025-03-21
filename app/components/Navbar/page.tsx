@@ -3,6 +3,7 @@
 import { Layout, Dropdown, Avatar, Space } from 'antd';
 import { UserOutlined, SettingOutlined, LogoutOutlined } from '@ant-design/icons';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
 const { Header } = Layout;
@@ -20,6 +21,13 @@ export default function Navbar() {
       setUserInfo(JSON.parse(storedUserInfo));
     }
   }, []);
+
+  const router = useRouter();
+
+  const handleLogout = () => {
+    localStorage.removeItem('userInfo');
+    router.push('/login');
+  };
 
   const userMenuItems:any = [
     {
@@ -39,6 +47,7 @@ export default function Navbar() {
       key: 'logout',
       icon: <LogoutOutlined />,
       label: '退出登录',
+      onClick: handleLogout
     },
   ];
 
