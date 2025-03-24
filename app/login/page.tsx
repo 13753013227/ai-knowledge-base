@@ -32,10 +32,12 @@ export default function LoginPage() {
         remember_me: true,
         language: 'zh-Hans',
       });
+
+      
       if (response.result === 'success') {
         // 保存用户信息和token
-        localStorage.setItem('console_token', response.access_token);
-        localStorage.setItem('refresponseh_token', response.refresh_token);
+        localStorage.setItem('console_token', response.data.access_token);
+        localStorage.setItem('refresponseh_token', response.data.refresh_token);
         message.success('登录成功');
         router.replace('/');
       } else {

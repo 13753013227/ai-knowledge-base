@@ -20,7 +20,7 @@ const request: AxiosInstance = axios.create({
 request.interceptors.request.use(
   (config: any) => {
     // 从localStorage获取token
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('console_token');
     if (token) {
       config.headers = {
         ...config.headers,
@@ -40,7 +40,7 @@ request.interceptors.response.use(
     const { data } = response; 
     // 这里可以根据后端的响应结构进行调整
     // if (data.code === 200) {
-      return data.data;
+      return data;
     // } else {
     //   message.error(data.message || '请求失败');
     //   return Promise.reject(new Error(data.message || '请求失败'));
@@ -63,7 +63,7 @@ request.interceptors.response.use(
           if (message) {
             message.error('登录已过期，请重新登录');
           }
-          localStorage.removeItem('token');
+          localStorage.removeItem('console_token');
           window.location.href = '/login';
           break;
         case 403:

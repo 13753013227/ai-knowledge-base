@@ -10,11 +10,11 @@ const { Content } = Layout;
 const Home = () => {
   return (
     <Layout className="min-h-screen bg-gray-50">
-      <SiderComponent />
+      {/* <SiderComponent /> */}
       <Content className="p-8 pt-24">
         <ContentComponent />
       </Content>
-      <RightSider />
+      {/* <RightSider /> */}
     </Layout>
   );
 };

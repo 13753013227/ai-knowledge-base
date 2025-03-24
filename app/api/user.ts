@@ -29,3 +29,9 @@ export const getUserInfo = () => {
 export const logout = () => {
   return request.post('/user/logout');
 };
+
+// 助手列表
+export const installed = () => {
+  return request.get('/installed-apps');
+};
+

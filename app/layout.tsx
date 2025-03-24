@@ -5,6 +5,8 @@ import zhCN from 'antd/locale/zh_CN';
 import "./globals.css";
 import Navbar from './components/Navbar/page';
 import { usePathname } from 'next/navigation';
+import Sider from './components/Sider/page';
+import RightSider from './components/RightSider/page';
 
 export default function RootLayout({
   children,
@@ -19,8 +21,12 @@ export default function RootLayout({
       <body>
         <ConfigProvider locale={zhCN}>
           {showNavbar && <Navbar />}
-          <main className={showNavbar ? 'pt-16' : ''}>
-            {children}
+          <main className={showNavbar ? 'pt-16 flex' : ''}>
+            {showNavbar && <Sider />}
+            <div className="flex-1">
+              {children}
+            </div>
+            {showNavbar && <RightSider />}
           </main>
         </ConfigProvider>
       </body>
