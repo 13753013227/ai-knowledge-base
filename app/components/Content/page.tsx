@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Input, Button } from 'antd';
 import { SendOutlined } from '@ant-design/icons';
 import MessageStream from '../MessageStream/page';
+import { Bubble, Sender } from '@ant-design/x';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -39,12 +40,19 @@ export default function ContentComponent() {
     }, 1000);
   };
 
+  const messages1 = [
+    {
+      content: 'Hello, Ant Design X!',
+      role: 'user',
+    },
+  ];
+
   return (
     <div className="flex flex-col h-full">
       <div className="flex-1 overflow-y-auto">
         {messages.length === 0 ? (
           <div className="max-w-4xl mx-auto mt-8">
-            <h1 className="text-2xl font-bold mb-6">欢迎使用远禾大模型助手</h1>
+            <h1 className="text-2xl font-bold mb-6">我是远禾大模型助手，很高心见到你！</h1>
             <div className="bg-white rounded-lg p-6 shadow-sm">
               <h2 className="text-lg font-medium mb-4">使用说明</h2>
               <div className="space-y-4 text-gray-600">
@@ -54,7 +62,7 @@ export default function ContentComponent() {
                 </div>
                 <div className="flex items-start gap-2">
                   <div className="w-2 h-2 rounded-full bg-blue-600 mt-2"></div>
-                  <p>人事管理制度：包括考勤、请假、加班、调休等相关规定。</p>
+                  <p>我可以帮你写代码、读文件、写作各种创意内容，请把你的任务交给我吧</p>
                 </div>
                 <div className="flex items-start gap-2">
                   <div className="w-2 h-2 rounded-full bg-blue-600 mt-2"></div>
@@ -67,7 +75,7 @@ export default function ContentComponent() {
           <MessageStream messages={messages} isThinking={isThinking} />
         )}
       </div>
-      <div className="border-t p-4 bg-white">
+      {/* <div className="border-t p-4 bg-white">
         <div className="max-w-4xl mx-auto flex gap-2">
           <Input.TextArea
             value={input}
@@ -88,6 +96,11 @@ export default function ContentComponent() {
             disabled={!input.trim()}
           />
         </div>
+      </div> */}
+
+      <div className="mt-30">
+        {/* <Bubble.List items={messages1} /> */}
+        <Sender />
       </div>
     </div>
   );

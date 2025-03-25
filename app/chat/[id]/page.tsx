@@ -10,6 +10,7 @@ export default function ChatPage() {
   return (
     <ChatComponent
       title={chatId}
+      assistantId={chatId}
     />
   );
 }

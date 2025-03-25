@@ -1,10 +1,11 @@
 'use client';
 
 import { Layout, message } from 'antd';
-import { BookOutlined, MessageOutlined, GlobalOutlined, RocketOutlined, FileSearchOutlined } from '@ant-design/icons';
+import { BookOutlined, MessageOutlined, GlobalOutlined, RocketOutlined, FileSearchOutlined, HomeOutlined } from '@ant-design/icons';
 import { ReactNode, useState, useEffect } from 'react';
 import { installed } from '../../api/user';
 import { useRouter } from 'next/navigation';
+import { useAppStore } from '../../store';
 
 const { Sider } = Layout;
 
@@ -32,16 +33,21 @@ export default function SiderComponent() {
     const fetchInstalledApps = async () => {
       try {
         const response:any = await installed();
+        const homeItem = {
+          icon: <HomeOutlined />,
+          title: '首页',
+          active: true,
+          id: 'home'
+        };
+
         const apps = response.installed_apps.map((item: any, index: number) => ({
           icon: iconMap[item.app.icon] || <RocketOutlined />,
           title: item.app.name,
           active: false,
           id: item.id,
         }));
-        if (apps.length > 0) {
-          apps[0].active = true;
-        }
-        setMenuItems(apps);
+        const allItems = [homeItem, ...apps];
+        setMenuItems(allItems);
       } catch (error) {
         message.error('获取助手列表失败');
         console.error('Failed to fetch installed apps:', error);
@@ -53,7 +59,12 @@ export default function SiderComponent() {
 
   const handleMenuClick = (item:any, index: number) => {
     setActiveIndex(index);
-    router.push(`/chat/${item.id}`);
+    useAppStore.getState().setCurrentMenuItem(item);
+    if (item.id === 'home') {
+      router.push('/home');
+    } else {
+      router.push(`/chat/${item.id}`);
+    }
   };
 
   return (

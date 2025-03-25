@@ -54,7 +54,7 @@ export default function Navbar() {
   return (
     <div className="bg-white shadow-[0_2px_8px_rgba(0,0,0,0.1)] h-16 px-8 flex items-center justify-between fixed w-full z-10">
       <div className="flex items-center">
-        <Link href="/" className="flex items-center gap-3">
+        <Link href="/home" className="flex items-center gap-3">
           <span className="text-2xl font-bold text-blue-600 tracking-tight">logo</span>
           <span className="text-lg font-medium text-gray-800">远禾大模型知识库</span>
         </Link>

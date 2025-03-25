@@ -39,7 +39,7 @@ export default function LoginPage() {
         localStorage.setItem('console_token', response.data.access_token);
         localStorage.setItem('refresponseh_token', response.data.refresh_token);
         message.success('登录成功');
-        router.replace('/');
+        router.replace('/home');
       } else {
         message.error(response.data);
       }

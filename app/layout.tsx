@@ -15,6 +15,7 @@ export default function RootLayout({
 }>) {
   const pathname = usePathname();
   const showNavbar = pathname !== '/login';
+  const showHomeNavbar = pathname!== '/home';
 
   return (
     <html lang="zh-CN">
@@ -26,7 +27,7 @@ export default function RootLayout({
             <div className="flex-1">
               {children}
             </div>
-            {showNavbar && <RightSider />}
+            {showNavbar && showHomeNavbar && <RightSider />}
           </main>
         </ConfigProvider>
       </body>
