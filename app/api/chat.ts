@@ -24,7 +24,9 @@ export interface SendMessageParams {
 
 // 发送消息
 export const sendMessage = (assistantId: string, params: SendMessageParams) => {
-  return request.post<Message>(`/installed-apps/${assistantId}/chat-messages`, params);
+  return request.post<Message>(`/installed-apps/${assistantId}/chat-messages`, params, {
+    isStream: true
+  });
 };
 
 // 获取聊天历史记录

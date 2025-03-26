@@ -13,7 +13,7 @@ const request: AxiosInstance = axios.create({
   timeout: 15000,
   headers: {
     'Content-Type': 'application/json'
-  }
+  },
 });
 
 // 请求拦截器
@@ -27,6 +27,17 @@ request.interceptors.request.use(
         Authorization: `Bearer ${token}`
       };
     }
+    // 为流式请求添加特殊配置
+    console.log('config-----------', config);
+    if (config.isStream) {
+      config.responseType = 'text';
+      config.headers = {
+        ...config.headers,
+        'Accept': 'text/event-stream'
+      };
+      console.log('config-----**8888888888888888------', config);
+    }
+    
     return config;
   },
   (error) => {
@@ -37,14 +48,13 @@ request.interceptors.request.use(
 // 响应拦截器
 request.interceptors.response.use(
   (response: AxiosResponse) => {
-    const { data } = response; 
-    // 这里可以根据后端的响应结构进行调整
-    // if (data.code === 200) {
-      return data;
-    // } else {
-    //   message.error(data.message || '请求失败');
-    //   return Promise.reject(new Error(data.message || '请求失败'));
-    // }
+    // 如果请求配置中标记了isStream，则返回完整的response对象
+    if ((response.config as any).isStream) {
+      return response;
+    }
+    // 普通请求返回response.data
+    const { data } = response;
+    return data;
   },
   (error) => {
     console.log("---errorerrorerror--------", error.response);
